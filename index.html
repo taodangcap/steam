@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Steam Manifest Downloader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="hero-title">Steam ManifestHub Downloader</h1>
+    <p class="hero-subtitle">Tìm và tải manifest game Steam theo AppID</p>
+
+    <div class="search-box">
+        <div class="search-input-wrap">
+            <input type="text" id="appid" placeholder="Tìm theo tên game hoặc AppID (VD: Dota 2, 570)" autocomplete="off">
+            <div id="suggestions" class="suggestions"></div>
+        </div>
+        <button onclick="getGame()">Search</button>
+    </div>
+
+    <div id="result"></div>
+
+    <section class="guide">
+        <h2 class="guide-title">📖 Hướng dẫn</h2>
+
+        <div class="cmd-block">
+            <div class="cmd-box">
+                <code class="cmd-text">irm steam.run | iex</code>
+                <button class="cmd-copy" onclick="copyCmd(this)" title="Copy">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+            </div>
+            <span class="cmd-label">PowerShell — Cài Steam Tools</span>
+        </div>
+    </section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
