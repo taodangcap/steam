@@ -2,18 +2,48 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Steam Manifest Downloader</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Manifest Downloader - Tìm và tải manifest game Steam theo AppID</title>
+    <meta name="description" content="Công cụ tìm kiếm và tải manifest game Steam theo AppID hoặc tên game. Hỗ trợ ManifestHub, DepotDownloader. Tìm game nhanh, tải manifest miễn phí.">
+    <meta name="keywords" content="Steam manifest, ManifestHub, Steam AppID, tải manifest game, DepotDownloader, Steam game download">
+    <meta name="author" content="Steam Manifest Downloader">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="logo.ico">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Steam Manifest Downloader - Tìm và tải manifest game Steam">
+    <meta property="og:description" content="Tìm kiếm game Steam theo tên hoặc AppID, tải manifest miễn phí từ ManifestHub.">
+    <meta property="og:locale" content="vi_VN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Steam Manifest Downloader">
+    <meta name="twitter:description" content="Tìm và tải manifest game Steam theo AppID hoặc tên game.">
+
     <link rel="stylesheet" href="style.css">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Steam Manifest Downloader",
+        "description": "Công cụ tìm kiếm và tải manifest game Steam theo AppID hoặc tên game",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any"
+    }
+    </script>
 </head>
 <body>
 
-<div class="container">
+<main class="container">
     <h1 class="hero-title">Steam ManifestHub Downloader</h1>
     <p class="hero-subtitle">Tìm và tải manifest game Steam theo AppID</p>
 
     <div class="search-box">
         <div class="search-input-wrap">
-            <input type="text" id="appid" placeholder="Tìm theo tên game hoặc AppID (VD: Dota 2, 570)" autocomplete="off">
+            <input type="text" id="appid" placeholder="Tìm theo tên game hoặc AppID (VD: Dota 2, 570)" autocomplete="off" aria-label="Tìm game Steam theo tên hoặc AppID">
             <div id="suggestions" class="suggestions"></div>
         </div>
         <button onclick="getGame()">Search</button>
@@ -34,7 +64,7 @@
             <span class="cmd-label">PowerShell — Cài Steam Tools</span>
         </div>
     </section>
-</div>
+</main>
 
 <script src="script.js"></script>
 </body>
