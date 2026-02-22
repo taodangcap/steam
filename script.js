@@ -1,7 +1,7 @@
 let searchTimeout;
 
 // CORS proxy - Steam API chặn request trực tiếp từ browser
-const proxy = (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+const proxy = (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`;
 
 document.getElementById('appid').addEventListener('input', function() {
     const val = this.value.trim();
