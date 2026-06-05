@@ -14,10 +14,9 @@ const featuredGames = [
 
 // Multi-proxy fallback list to bypass CORS and avoid rate limits
 const proxies = [
-    (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-    (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-    (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-    (url) => `https://thingproxy.freeboard.io/fetch/${url}`
+    (url) => `https://api.cors.lol/?url=${encodeURIComponent(url)}`,
+    (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+    (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
 ];
 
 // Helper to access Cache (sessionStorage)
