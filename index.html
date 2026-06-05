@@ -9,7 +9,6 @@
     <meta name="author" content="Steam Manifest Downloader">
     <meta name="robots" content="index, follow">
     <link rel="icon" href="logo.ico">
-    
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -18,12 +17,14 @@
     <meta property="og:locale" content="vi_VN">
     <meta property="og:image" content="https://cdn.pfps.gg/banners/7872-purple-anime.png">
 
-
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Steam Manifest Downloader">
     <meta name="twitter:description" content="Tìm và tải manifest game Steam theo AppID hoặc tên game.">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
     <!-- Schema.org -->
@@ -40,35 +41,112 @@
 </head>
 <body>
 
-<main class="container">
-    <h1 class="hero-title">Steam ManifestHub Downloader</h1>
-    <p class="hero-subtitle">Tìm và tải manifest game Steam theo AppID</p>
-
-    <div class="search-box">
-        <div class="search-input-wrap">
-            <input type="text" id="appid" placeholder="Tìm theo tên game hoặc AppID (VD: Dota 2, 570)" autocomplete="off" aria-label="Tìm game Steam theo tên hoặc AppID">
-            <div id="suggestions" class="suggestions"></div>
+    <!-- Header Navigation -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <svg class="steam-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.327 15.65c-.274.22-.647.35-1.054.35-.903 0-1.637-.734-1.637-1.637 0-.442.176-.842.46-1.135L11.23 13.73c-.292.1-.605.156-.93.156-1.523 0-2.76-1.238-2.76-2.76 0-1.523 1.237-2.76 2.76-2.76s2.76 1.237 2.76 2.76c0 .324-.057.638-.157.93l1.498 1.867c.293-.284.693-.46 1.135-.46.903 0 1.637.734 1.637 1.637 0 .408-.13.78-.35 1.054l2.42 2.42c-.22.274-.35.647-.35 1.054 0 .903.734 1.637 1.637 1.637s1.637-.734 1.637-1.637c0-.408-.13-.78-.35-1.054l-2.42-2.42zm-5.027-6.52c0-.76.618-1.38 1.38-1.38s1.38.62 1.38 1.38-.618 1.38-1.38 1.38-1.38-.62-1.38-1.38z"/>
+                </svg>
+                <span class="brand-name">STEAM MANIFESTS</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="nav-link active" onclick="scrollToTop()">Tìm Kiếm</a>
+                <a href="#featured-section" class="nav-link">Nổi Bật</a>
+                <a href="#guide-section" class="nav-link">Hướng Dẫn</a>
+            </nav>
         </div>
-        <button onclick="getGame()">Search</button>
-    </div>
+    </header>
 
-    <div id="result"></div>
+    <main class="container">
+        <!-- Hero Search Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Steam Manifest Downloader</h1>
+            <p class="hero-subtitle">Tìm kiếm game Steam nhanh chóng và xuất file manifests hoặc mã lệnh tải game</p>
 
-    <section class="guide">
-        <h2 class="guide-title">📖 Hướng dẫn</h2>
-
-        <div class="cmd-block">
-            <div class="cmd-box">
-                <code class="cmd-text">irm steam.run | iex</code>
-                <button class="cmd-copy" onclick="copyCmd(this)" title="Copy">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <div class="search-box">
+                <div class="search-input-wrap">
+                    <input type="text" id="appid" placeholder="Nhập tên game hoặc AppID (VD: CS2, Dota 2, 570)..." autocomplete="off" aria-label="Tìm game Steam">
+                    <div id="suggestions" class="suggestions"></div>
+                </div>
+                <button onclick="getGame()" class="search-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Tìm Game
                 </button>
             </div>
-            <span class="cmd-label">PowerShell — Cài Steam Tools</span>
-        </div>
-    </section>
-</main>
+        </section>
 
-<script src="script.js"></script>
+        <!-- Result Render Area -->
+        <section id="result" class="result-section"></section>
+
+        <!-- Featured Games Grid -->
+        <section id="featured-section" class="featured-section">
+            <h2 class="section-title">🎮 Game Phổ Biến</h2>
+            <div class="featured-grid" id="featured-grid">
+                <!-- Javascript will load featured games here -->
+            </div>
+        </section>
+
+        <!-- Interactive Guides Panel -->
+        <section id="guide-section" class="guide-panel">
+            <h2 class="section-title">📖 Hướng Dẫn Tải Game</h2>
+            
+            <div class="tab-header">
+                <button class="tab-btn active" onclick="switchGuideTab('powershell')">Powershell Tool</button>
+                <button class="tab-btn" onclick="switchGuideTab('depotdownloader')">DepotDownloader</button>
+                <button class="tab-btn" onclick="switchGuideTab('steamcmd')">SteamCMD</button>
+            </div>
+
+            <div class="tab-content">
+                <!-- PowerShell Panel -->
+                <div id="guide-powershell" class="tab-pane active">
+                    <p class="guide-desc">Giải pháp nhanh nhất dành cho Windows. Công cụ tự động cài đặt Steam Tools hỗ trợ import manifests.</p>
+                    <div class="cmd-block">
+                        <div class="cmd-box">
+                            <code class="cmd-text">irm steam.run | iex</code>
+                            <button class="cmd-copy" onclick="copyCmd(this)" title="Copy">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            </button>
+                        </div>
+                        <span class="cmd-label">Chạy dòng lệnh này trên Windows PowerShell để cài đặt.</span>
+                    </div>
+                </div>
+
+                <!-- DepotDownloader Panel -->
+                <div id="guide-depotdownloader" class="tab-pane">
+                    <p class="guide-desc">Công cụ CLI mạnh mẽ giúp tải game Steam trực tiếp từ depot. Hãy sao chép lệnh tương ứng bên dưới (AppID và DepotID sẽ tự động cập nhật sau khi bạn tìm kiếm game).</p>
+                    <div class="cmd-block">
+                        <div class="cmd-box">
+                            <code class="cmd-text" id="depot-cmd-text">dotnet DepotDownloader.dll -app [AppID] -depot [DepotID] -manifest [ManifestID] -user [Tên_Tài_Khoản_Steam]</code>
+                            <button class="cmd-copy" onclick="copyCmd(this)" title="Copy">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            </button>
+                        </div>
+                        <span class="cmd-label">Yêu cầu cài đặt .NET Core để khởi chạy.</span>
+                    </div>
+                </div>
+
+                <!-- SteamCMD Panel -->
+                <div id="guide-steamcmd" class="tab-pane">
+                    <p class="guide-desc">Công cụ chính thức của Valve dành cho nhà phát triển để tải game qua dòng lệnh console.</p>
+                    <div class="cmd-block">
+                        <div class="cmd-box">
+                            <code class="cmd-text" id="steamcmd-text">steamcmd.exe +login [Tài_Khoản] [Mật_Khẩu] +download_depot [AppID] [DepotID] [ManifestID] +quit</code>
+                            <button class="cmd-copy" onclick="copyCmd(this)" title="Copy">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            </button>
+                        </div>
+                        <span class="cmd-label">Thay thế [Tài_Khoản] và [Mật_Khẩu] bằng thông tin tài khoản Steam của bạn.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>© 2026 Steam Manifest Hub. Không liên kết với Valve Corporation.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
