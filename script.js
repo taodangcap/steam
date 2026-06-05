@@ -13,10 +13,18 @@ const featuredGames = [
 ];
 
 // Multi-proxy fallback list to bypass CORS and avoid rate limits
+// Thay YOUR_WORKER_SUBDOMAIN bằng subdomain Cloudflare Worker của bạn
+// (deploy file worker.js lên https://workers.cloudflare.com - miễn phí 100k req/ngày)
+const WORKER_URL = null; // VD: 'https://steam-proxy.yourname.workers.dev'
+
 const proxies = [
+    // Proxy tự host (ưu tiên cao nhất - nhanh và không bị chặn)
+    ...(WORKER_URL ? [(url) => `${WORKER_URL}/?url=${encodeURIComponent(url)}`] : []),
+    // Proxy miễn phí dự phòng
     (url) => `https://api.cors.lol/?url=${encodeURIComponent(url)}`,
     (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-    (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+    (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
 ];
 
 // Helper to access Cache (sessionStorage)
