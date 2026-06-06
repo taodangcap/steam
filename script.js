@@ -40,7 +40,7 @@ function getCache(key) {
 function setCache(key, val) {
     try {
         sessionStorage.setItem(key, JSON.stringify(val));
-    } catch (e) {}
+    } catch (e) { }
 }
 
 // Robust fetch function trying proxies in sequence
@@ -62,7 +62,7 @@ async function fetchWithFallback(url) {
                             if (parsed.contents) {
                                 return JSON.parse(parsed.contents);
                             }
-                        } catch (err) {}
+                        } catch (err) { }
                         throw new Error("Invalid JSON returned by proxy");
                     }
                 }
@@ -118,10 +118,10 @@ function switchGuideTab(tabId) {
 // Initialize on DOM Load
 window.addEventListener('DOMContentLoaded', () => {
     loadFeaturedGames();
-    
+
     // Add active styling logic for header links
     document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
@@ -129,7 +129,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // Suggestions Autocomplete Trigger
-document.getElementById('appid').addEventListener('input', function() {
+document.getElementById('appid').addEventListener('input', function () {
     const val = this.value.trim();
     const suggestions = document.getElementById('suggestions');
 
@@ -154,7 +154,7 @@ document.getElementById('appid').addEventListener('input', function() {
             try {
                 const url = `https://store.steampowered.com/api/appdetails?appids=${val}`;
                 const cacheKey = `steam_app_${val}`;
-                
+
                 let data = getCache(cacheKey);
                 if (!data) {
                     data = await fetchWithFallback(url);
@@ -185,7 +185,7 @@ document.getElementById('appid').addEventListener('input', function() {
         try {
             const url = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(val)}&l=english&cc=US`;
             const cacheKey = `steam_suggest_${val}`;
-            
+
             let data = getCache(cacheKey);
             if (!data) {
                 data = await fetchWithFallback(url);
@@ -216,7 +216,7 @@ document.getElementById('appid').addEventListener('input', function() {
     }, 450);
 });
 
-document.getElementById('appid').addEventListener('blur', function() {
+document.getElementById('appid').addEventListener('blur', function () {
     setTimeout(() => {
         document.getElementById('suggestions').classList.remove('show');
     }, 250);
@@ -260,7 +260,7 @@ function copyCmdText(elementId, btn) {
 function updateGeneratedCommands(appid) {
     const depotId = document.getElementById("depot-id-input").value.trim() || "[DepotID]";
     const manifestId = document.getElementById("manifest-id-input").value.trim() || "[ManifestID]";
-    
+
     document.getElementById("depot-downloader-cmd").textContent = `dotnet DepotDownloader.dll -app ${appid} -depot ${depotId} -manifest ${manifestId} -user YOUR_STEAM_USER`;
     document.getElementById("steamcmd-cmd").textContent = `steamcmd.exe +login YOUR_USER YOUR_PASS +download_depot ${appid} ${depotId} ${manifestId} +quit`;
 }
@@ -289,7 +289,7 @@ async function getGame() {
         try {
             const searchUrl = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(appid)}&l=english&cc=US`;
             const cacheKey = `steam_suggest_${appid}`;
-            
+
             let searchData = getCache(cacheKey);
             if (!searchData) {
                 searchData = await fetchWithFallback(searchUrl);
@@ -314,7 +314,7 @@ async function getGame() {
     try {
         const url = `https://store.steampowered.com/api/appdetails?appids=${appid}`;
         const cacheKey = `steam_app_${appid}`;
-        
+
         let data = getCache(cacheKey);
         if (!data) {
             data = await fetchWithFallback(url);
@@ -409,11 +409,11 @@ async function getGame() {
                 </div>
             </div>
         `;
-        
+
         // Dynamically update the instructions in the main guide panel to use the loaded AppID
         document.getElementById("depot-cmd-text").textContent = `dotnet DepotDownloader.dll -app ${appid} -depot [DepotID] -manifest [ManifestID] -user YOUR_STEAM_USER`;
         document.getElementById("steamcmd-text").textContent = `steamcmd.exe +login YOUR_USER YOUR_PASS +download_depot ${appid} [DepotID] [ManifestID] +quit`;
-        
+
     } catch (error) {
         console.error("Get game details error", error);
         resultDiv.innerHTML = `<div class="error-message">Không thể kết nối đến máy chủ Steam qua các cổng CORS Proxy. Vui lòng thử lại sau.</div>`;
