@@ -15,10 +15,10 @@ export default {
     }
 
     const url = new URL(request.url);
-    
+
     // Get target URL from ?url= param
     const targetUrl = url.searchParams.get('url');
-    
+
     if (!targetUrl) {
       return new Response(JSON.stringify({ error: 'Missing ?url= parameter' }), {
         status: 400,
