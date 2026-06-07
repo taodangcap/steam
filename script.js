@@ -15,7 +15,7 @@ const featuredGames = [
 // Multi-proxy fallback list to bypass CORS and avoid rate limits
 // Thay YOUR_WORKER_SUBDOMAIN bằng subdomain Cloudflare Worker của bạn
 // (deploy file worker.js lên https://workers.cloudflare.com - miễn phí 100k req/ngày)
-const WORKER_URL = 'https://steam.trinhhuy12343.workers.dev'; // Cloudflare Worker proxy
+const WORKER_URL = 'https://steam-proxy.trinhhuy12343.workers.dev'; // Cloudflare Worker proxy
 
 const proxies = [
     // Proxy tự host (ưu tiên cao nhất - nhanh và không bị chặn)
