@@ -349,20 +349,20 @@ async function getGame() {
 
                     <div class="metadata-grid">
                         <div class="meta-box">
-                            <span class="meta-box-label">AppID</span>
+                            <span class="meta-box-label">App ID</span>
                             <span class="meta-box-val">${appid}</span>
                         </div>
                         <div class="meta-box">
-                            <span class="meta-box-label">Ngày Phát Hành</span>
-                            <span class="meta-box-val">${game.release_date?.date || "Chưa xác định"}</span>
+                            <span class="meta-box-label">Phát hành</span>
+                            <span class="meta-box-val">${game.release_date?.date || 'Chưa xác định'}</span>
                         </div>
                         <div class="meta-box">
-                            <span class="meta-box-label">Nhà Phát Triển</span>
-                            <span class="meta-box-val">${game.developers?.join(", ") || "Chưa xác định"}</span>
+                            <span class="meta-box-label">Dev</span>
+                            <span class="meta-box-val">${game.developers?.join(', ') || 'Chưa xác định'}</span>
                         </div>
                         <div class="meta-box">
-                            <span class="meta-box-label">Nhà Phát Hành</span>
-                            <span class="meta-box-val">${game.publishers?.join(", ") || "Chưa xác định"}</span>
+                            <span class="meta-box-label">Publisher</span>
+                            <span class="meta-box-val">${game.publishers?.join(', ') || 'Chưa xác định'}</span>
                         </div>
                     </div>
 
