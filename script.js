@@ -2,14 +2,14 @@ let searchTimeout;
 
 // Popular games data for the featured grid
 const featuredGames = [
-    { id: 570, name: "Dota 2", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/570/capsule_231x87.jpg" },
-    { id: 730, name: "Counter-Strike 2", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/730/capsule_231x87.jpg" },
-    { id: 271590, name: "Grand Theft Auto V", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/capsule_231x87.jpg" },
-    { id: 1245620, name: "Elden Ring", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/capsule_231x87.jpg" },
-    { id: 2358720, name: "Black Myth: Wukong", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/capsule_231x87.jpg" },
-    { id: 1091500, name: "Cyberpunk 2077", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/capsule_231x87.jpg" },
-    { id: 990080, name: "Hogwarts Legacy", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/capsule_231x87.jpg" },
-    { id: 620, name: "Portal 2", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/620/capsule_231x87.jpg" }
+    { id: 570,     name: "Dota 2" },
+    { id: 730,     name: "Counter-Strike 2" },
+    { id: 271590,  name: "Grand Theft Auto V" },
+    { id: 1245620, name: "Elden Ring" },
+    { id: 2358720, name: "Black Myth: Wukong" },
+    { id: 1091500, name: "Cyberpunk 2077" },
+    { id: 990080,  name: "Hogwarts Legacy" },
+    { id: 620,     name: "Portal 2" }
 ];
 
 // Multi-proxy fallback list to bypass CORS and avoid rate limits
@@ -79,15 +79,18 @@ async function fetchWithFallback(url) {
 function loadFeaturedGames() {
     const grid = document.getElementById("featured-grid");
     if (!grid) return;
-    grid.innerHTML = featuredGames.map(game => `
+    grid.innerHTML = featuredGames.map(game => {
+        const img = `https://cdn.cloudflare.steamstatic.com/steam/apps/${game.id}/header.jpg`;
+        return `
         <div class="featured-card" onclick="selectFeaturedGame(${game.id})">
-            <img src="${game.image}" alt="${game.name}" onerror="this.src='https://cdn.cloudflare.steamstatic.com/steam/apps/${game.id}/header.jpg'">
+            <img src="${img}" alt="${game.name}" loading="lazy"
+                 onerror="this.src='https://cdn.cloudflare.steamstatic.com/steam/apps/${game.id}/capsule_616x353.jpg'">
             <div class="featured-card-overlay">
                 <strong>${game.name}</strong>
                 <span>AppID: ${game.id}</span>
             </div>
-        </div>
-    `).join('');
+        </div>`;
+    }).join('');
 }
 
 function selectFeaturedGame(appid) {
@@ -163,10 +166,11 @@ document.getElementById('appid').addEventListener('input', function () {
 
                 if (data && data[val]?.success) {
                     const g = data[val].data;
-                    const img = `https://cdn.cloudflare.steamstatic.com/steam/apps/${val}/capsule_231x87.jpg`;
+                    const img = g.header_image || `https://cdn.cloudflare.steamstatic.com/steam/apps/${val}/header.jpg`;
                     suggestions.innerHTML = `
                         <div class="suggestion-item" data-appid="${val}">
-                            <img src="${img}" alt="" onerror="this.src='https://cdn.cloudflare.steamstatic.com/steam/apps/${val}/header.jpg'">
+                            <img src="${img}" alt="${g.name}" loading="lazy"
+                                 onerror="this.onerror=null;this.src='https://cdn.cloudflare.steamstatic.com/steam/apps/${val}/capsule_616x353.jpg'">
                             <div>
                                 <strong>${g.name}</strong>
                                 <span>AppID: ${val}</span>
@@ -193,15 +197,18 @@ document.getElementById('appid').addEventListener('input', function () {
             }
 
             if (data && data.items?.length) {
-                suggestions.innerHTML = data.items.map(item => `
+                suggestions.innerHTML = data.items.map(item => {
+                    const thumb = `https://cdn.cloudflare.steamstatic.com/steam/apps/${item.id}/header.jpg`;
+                    return `
                     <div class="suggestion-item" data-appid="${item.id}">
-                        <img src="${item.tiny_image}" alt="">
+                        <img src="${thumb}" alt="${item.name}" loading="lazy"
+                             onerror="this.onerror=null;this.src='${item.tiny_image || ''}'">
                         <div>
                             <strong>${item.name}</strong>
                             <span>AppID: ${item.id}</span>
                         </div>
-                    </div>
-                `).join('');
+                    </div>`;
+                }).join('');
                 suggestions.classList.add('show');
                 bindSuggestionClick();
             } else {
